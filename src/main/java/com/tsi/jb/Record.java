@@ -67,7 +67,7 @@ public class Record {
 
     @Override
     public String toString() {
-        return String.format("Nr.%d %s %s %s", id, name, email, String.join(",", phones));
+        return String.format("Nr. %02d %s %s %s", id, name, email, String.join(",", phones));
         //return id+". "+ this.name + " " + this.email + " " + this.phones;
     }
 }

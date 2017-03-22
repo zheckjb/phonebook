@@ -12,14 +12,14 @@ public class PhoneBook {
     //recordList - variable to store array of Record
     private List<Record> recordsList = new ArrayList<>();
 
-    @Command(name = "create", abbrev = "c", description = "Add 1")
+    @Command(name = "create", abbrev = "c1", description = "Add 1")
     public void create(String phName) {
         Record r = new Record();
         r.setName(phName);
         recordsList.add(r);
     }
 
-    @Command(name = "create", abbrev = "c", description = "Add 2")
+    @Command(name = "create", abbrev = "c2", description = "Add 2")
     public void create(String phName, String... phNumber) {
         Record r = new Record();
         r.setName(phName);
@@ -27,7 +27,7 @@ public class PhoneBook {
         recordsList.add(r);
     }
 
-    @Command(name = "create", abbrev = "c2", description = "Add 2")
+    @Command(name = "create", abbrev = "c3", description = "Add 3")
     public void create(String phName, String Email, String... phNumbers) {
         Record r = new Record();
         r.setName(phName);
@@ -36,7 +36,7 @@ public class PhoneBook {
         recordsList.add(r);
     }
 
-    @Command(name = "create", abbrev = "c3", description = "Add 3")
+    @Command(name = "create", abbrev = "c4", description = "Add 4")
     public void create(String phName, String phNumber, String phEmail) {
         Record r = new Record();
         r.setName(phName);
@@ -55,6 +55,18 @@ public class PhoneBook {
         }
     }
 
+    @Command(name = "find", abbrev = "f")
+    public List<Record> find(String str) {
+        List<Record> result = new ArrayList<>();
+        for (Record r : recordsList) {
+            String name = r.getName().toLowerCase();
+            if (name.contains(str.toLowerCase())) {
+                result.add(r);
+            }
+        }
+
+        return result;
+    }
     @Command(name = "list", abbrev = "l", header = "List: ")
     public List<Record> list() {
         return recordsList;
