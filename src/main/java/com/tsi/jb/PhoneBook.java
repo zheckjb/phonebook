@@ -7,6 +7,7 @@ import asg.cliche.ShellFactory;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,13 +48,21 @@ public class PhoneBook {
     }
 
     @Command(name = "create", abbrev = "cn", description = "Add notes")
-    public void create(String nName, String nNote) {
+    public void createNote(String nName, String nNote) {
         Note r = new Note();
         r.setName(nName);
         r.setNote(nNote);
         recordsList.add(r);
     }
-
+    @Command(name = "create", abbrev = "cnr", description = "Add notes")
+    public void createNoteWithReminder(String nName, String nNote, String nDateTime) {
+        Reminder r = new Reminder();
+        r.setName(nName);
+        r.setNote(nNote);
+        r.setRemDate(nDateTime);
+        r.setRemDateDt(Date.valueOf());
+        recordsList.add(r);
+    }
     @Command(name = "create", abbrev = "c4", description = "Add 4")
     public void create(String phName, String phNumber, String phEmail) {
         Person r = new Person();
@@ -73,7 +82,16 @@ public class PhoneBook {
             }
         }
     }
-
+    @Command(name = "addnotes", abbrev = "apn")
+    public void addNotes(int id, String myNote) {
+        for (Record r : recordsList) {
+            if (r instanceof Person && r.getId() == id) {
+                //Person p = (Person) r;
+                //p.addPhones(phNumber);
+                break;
+            }
+        }
+    }
     @Command(name = "edit", abbrev = "e")
     public void edit(int id) throws IOException {
         for (Record r : recordsList) {
