@@ -7,7 +7,6 @@ import asg.cliche.ShellFactory;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +37,15 @@ public class PhoneBook {
         recordsList.add(r);
     }
 
+    @Command(name = "create", abbrev = "c4", description = "Add 4")
+    public void create(String phName, String phNumber, String phEmail) {
+        Person r = new Person();
+        r.setName(phName);
+        r.setPhone(phNumber);
+        r.setEmail(phEmail);
+        recordsList.add(r);
+    }
+
     @Command(name = "create", abbrev = "cp", description = "Add name, email, phones")
     public void create(String phName, String Email, String... phNumbers) {
         Person r = new Person();
@@ -60,15 +68,7 @@ public class PhoneBook {
         r.setName(nName);
         r.setNote(nNote);
         r.setRemDate(nDateTime);
-        r.setRemDateDt(Date.valueOf());
-        recordsList.add(r);
-    }
-    @Command(name = "create", abbrev = "c4", description = "Add 4")
-    public void create(String phName, String phNumber, String phEmail) {
-        Person r = new Person();
-        r.setName(phName);
-        r.setPhone(phNumber);
-        r.setEmail(phEmail);
+
         recordsList.add(r);
     }
 
@@ -85,7 +85,7 @@ public class PhoneBook {
     @Command(name = "addnotes", abbrev = "apn")
     public void addNotes(int id, String myNote) {
         for (Record r : recordsList) {
-            if (r instanceof Person && r.getId() == id) {
+            if (r instanceof Note && r.getId() == id) {
                 //Person p = (Person) r;
                 //p.addPhones(phNumber);
                 break;
@@ -134,6 +134,31 @@ public class PhoneBook {
             if (name.contains(str) || email.contains(str)) {
                 result.add(r);
 
+            }
+        }
+        return result;
+    }
+
+    @Command(name = "find3", abbrev = "f3")
+    public List<Record> find3(String str) {
+        str = str.toLowerCase();
+        List<Record> result = new ArrayList<>();
+        for (Record r : recordsList) {
+            if (r.contains2(str)) {
+                result.add(r);
+            }
+        }
+        return result;
+    }
+
+
+    @Command(name = "find4", abbrev = "f4")
+    public List<Record> find4(String str) {
+        str = str.toLowerCase();
+        List<Record> result = new ArrayList<>();
+        for (Record r : recordsList) {
+            if (r.contains(str)) {
+                result.add(r);
             }
         }
         return result;

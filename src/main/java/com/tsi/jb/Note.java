@@ -19,5 +19,12 @@ public class Note extends Record {
         return String.format("Nr. %02d %s %s", getId(), getName(), Note);
     }
 
-
+    @Override
+    public boolean contains(String str) {
+        if (Note.toLowerCase().contains(str) || super.contains(str)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

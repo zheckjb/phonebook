@@ -30,7 +30,10 @@ public class Reminder extends Note {
         return String.format("Nr. %02d %s %s %s", getId(), getName(), remDate, getNote());
     }
 
-
+    @Override
+    public boolean contains(String str) {
+        return super.contains(str);
+    }
 
 
 }

@@ -49,4 +49,9 @@ public class Person extends Record {
         //bad string
         //return id+". "+ this.name + " " + this.email + " " + this.phones;
     }
+
+    @Override
+    public boolean contains(String str) {
+        return phones.contains(str) || email.toLowerCase().contains(str) || super.contains(str);
+    }
 }

@@ -26,4 +26,17 @@ public abstract class Record {
         this.name = name;
     }
 
+    // - possible, but if toString will be formatted with any keyword, it can fall to search
+    public boolean contains2(String str) {
+        if (this.toString().toLowerCase().contains(str)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean contains(String str) {
+        return name.toLowerCase().contains(str);
+    }
+
 }
