@@ -1,5 +1,6 @@
 package com.tsi.jb;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -7,7 +8,7 @@ import java.util.Date;
  */
 public class Reminder extends Note {
     private String remDate;
-    private Date remDateDt;
+    private LocalDate remDateDt;
 
     public String getRemDate() {
         return remDate;
@@ -17,11 +18,11 @@ public class Reminder extends Note {
         this.remDate = remDate;
     }
 
-    public Date getRemDateDt() {
+    public LocalDate getRemDateDt() {
         return remDateDt;
     }
 
-    public void setRemDateDt(Date remDateDt) {
+    public void setRemDateDt(LocalDate remDateDt) {
         this.remDateDt = remDateDt;
     }
 

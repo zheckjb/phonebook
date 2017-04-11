@@ -52,6 +52,12 @@ public class Person extends Record {
 
     @Override
     public boolean contains(String str) {
-        return phones.contains(str) || email.toLowerCase().contains(str) || super.contains(str);
+        boolean result = email.toLowerCase().contains(str) || super.contains(str);
+        if (!result)  {
+            for (String ph : phones) {
+                result =  ph.toLowerCase().contains(str);
+            }
+        }
+        return result;
     }
 }
