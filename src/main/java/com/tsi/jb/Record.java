@@ -1,8 +1,5 @@
 package com.tsi.jb;
 
-/**
- * Created by Zheck on 19.03.2017.
- */
 public abstract class Record {
     // static - define variable unique for all classes of Record
     // class variables (define by 'static')

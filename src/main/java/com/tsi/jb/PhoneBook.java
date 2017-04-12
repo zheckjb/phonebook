@@ -7,15 +7,14 @@ import asg.cliche.ShellFactory;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-/**
- * Created by Zheck on 19.03.2017.
- */
+
 public class PhoneBook {
     //recordList - variable to store array of Record
-    private List<Record> recordsList = new ArrayList<>();
+    //private List<Record> recordsList = new ArrayList<>();
+    private Map<Integer, Record> recordsList = new HashMap<>();
+
     private Shell theShell;
 
     public void cliSetShell(Shell theShell) {
@@ -26,7 +25,8 @@ public class PhoneBook {
     public void create(String phName) {
         Person r = new Person();
         r.setName(phName);
-        recordsList.add(r);
+        //recordsList.add(r);
+        recordsList.put(r.getId(), r);
     }
 
     @Command(name = "create", abbrev = "c2", description = "Add name and  phones")
@@ -34,7 +34,8 @@ public class PhoneBook {
         Person r = new Person();
         r.setName(phName);
         r.setPhone(phNumber);
-        recordsList.add(r);
+        //recordsList.add(r);
+        recordsList.put(r.getId(), r);
     }
 
     @Command(name = "create", abbrev = "c4", description = "Add 4")
@@ -43,7 +44,8 @@ public class PhoneBook {
         r.setName(phName);
         r.setPhone(phNumber);
         r.setEmail(phEmail);
-        recordsList.add(r);
+        recordsList.put(r.getId(), r);
+        //recordsList.add(r);
     }
 
     @Command(name = "create", abbrev = "cp", description = "Add name, email, phones")
@@ -52,7 +54,8 @@ public class PhoneBook {
         r.setName(phName);
         r.setEmail(Email);
         r.addPhones(phNumbers);
-        recordsList.add(r);
+        //recordsList.add(r);
+        recordsList.put(r.getId(), r);
     }
 
     @Command(name = "create", abbrev = "cn", description = "Add notes")
@@ -60,21 +63,23 @@ public class PhoneBook {
         Note r = new Note();
         r.setName(nName);
         r.setNote(nNote);
-        recordsList.add(r);
+        //recordsList.add(r);
+        recordsList.put(r.getId(), r);
     }
+
     @Command(name = "create", abbrev = "cnr", description = "Add notes")
     public void createNoteWithReminder(String nName, String nNote, String nDateTime) {
         Reminder r = new Reminder();
         r.setName(nName);
         r.setNote(nNote);
         r.setRemDate(nDateTime);
-
-        recordsList.add(r);
+        //recordsList.add(r);
+        recordsList.put(r.getId(), r);
     }
 
     @Command(name = "addphones", abbrev = "aph")
     public void addPhones(int id, String phNumber) {
-        for (Record r : recordsList) {
+        for (Record r : recordsList.values()) {
             if (r instanceof Person && r.getId() == id) {
                 Person p = (Person) r;
                 p.addPhones(phNumber);
@@ -84,7 +89,7 @@ public class PhoneBook {
     }
     @Command(name = "addnotes", abbrev = "apn")
     public void addNotes(int id, String myNote) {
-        for (Record r : recordsList) {
+        for (Record r : recordsList.values()) {
             if (r instanceof Note && r.getId() == id) {
                 //Person p = (Person) r;
                 //p.addPhones(phNumber);
@@ -92,21 +97,32 @@ public class PhoneBook {
             }
         }
     }
+
+    @Command
+    public Record show(int id) {
+        return recordsList.get(id);
+    }
+
+
     @Command(name = "edit", abbrev = "e")
     public void edit(int id) throws IOException {
-        for (Record r : recordsList) {
+        /*for (Record r : recordsList) {
             if (r instanceof Person && r.getId() == id) {
                 Person p = (Person) r;
                 ShellFactory.createSubshell("#" + id, theShell, "Edit record", p)
                         .commandLoop();
                 break;
             }
-        }
+        }*/
+        Record r = recordsList.get(id);
+        ShellFactory.createSubshell("#" + id, theShell, "Edit record", r)
+                .commandLoop();
+
     }
     @Command(name = "find", abbrev = "f")
     public List<Record> find(String str) {
         List<Record> result = new ArrayList<>();
-        for (Record r : recordsList) {
+        for (Record r : recordsList.values()) {
             if (r instanceof Person) {
                 String name = r.toString().toLowerCase();
                 if (name.contains(str.toLowerCase())) {
@@ -127,7 +143,7 @@ public class PhoneBook {
     public List<Record> find2(String str) {
         str = str.toLowerCase();
         List<Record> result = new ArrayList<>();
-        for (Record r : recordsList) {
+        for (Record r : recordsList.values()) {
             String name = r.getName().toLowerCase();
             //if statement in asigment of variable
             String email = r instanceof Person ? ((Person) r).getEmail().toLowerCase() : "";
@@ -143,7 +159,7 @@ public class PhoneBook {
     public List<Record> find3(String str) {
         str = str.toLowerCase();
         List<Record> result = new ArrayList<>();
-        for (Record r : recordsList) {
+        for (Record r : recordsList.values()) {
             if (r.contains2(str)) {
                 result.add(r);
             }
@@ -156,7 +172,7 @@ public class PhoneBook {
     public List<Record> find4(String str) {
         str = str.toLowerCase();
         List<Record> result = new ArrayList<>();
-        for (Record r : recordsList) {
+        for (Record r : recordsList.values()) {
             if (r.contains(str)) {
                 result.add(r);
             }
@@ -164,14 +180,20 @@ public class PhoneBook {
         return result;
     }
 
-    @Command(name = "list", abbrev = "l", header = "List: ")
-    public List<Record> list() {
-        return recordsList;
-    }
+    /*
+        @Command(name = "list", abbrev = "l", header = "List: ")
+        public List<Record> list() {
+            return recordsList;
+        }
 
-    @Command(name = "list", abbrev = "ls")
-    public String listS() {
-        return recordsList.toString();
+        @Command(name = "list", abbrev = "ls")
+        public String listS() {
+            return recordsList.toString();
+        }
+        */
+    @Command
+    public Collection<Record> list() {
+        return recordsList.values();
     }
 
     @Command(name = "save", abbrev = "sv")
@@ -179,7 +201,7 @@ public class PhoneBook {
         try {
             File myFile = new File("db.txt");
             FileWriter fileStr = new FileWriter(myFile);
-            for (Record r : recordsList) {
+            for (Record r : recordsList.values()) {
                 fileStr.write(String.format("%s \r\n", r));
             }
             fileStr.close();

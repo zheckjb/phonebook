@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created by JavaCourses on 29.03.2017..
- */
+
 public class Person extends Record {
     private String phone;
     private final List<String> phones = new ArrayList<>();

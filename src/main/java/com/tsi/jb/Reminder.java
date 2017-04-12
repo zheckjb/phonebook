@@ -1,11 +1,8 @@
 package com.tsi.jb;
 
 import java.time.LocalDate;
-import java.util.Date;
 
-/**
- * Created by Zheck on 04.04.2017.
- */
+
 public class Reminder extends Note {
     private String remDate;
     private LocalDate remDateDt;
