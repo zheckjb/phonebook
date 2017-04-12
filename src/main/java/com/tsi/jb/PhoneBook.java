@@ -14,6 +14,7 @@ public class PhoneBook {
     //recordList - variable to store array of Record
     //private List<Record> recordsList = new ArrayList<>();
     private Map<Integer, Record> recordsList = new HashMap<>();
+    private NavigableMap<String, Record> IndexByName = new TreeMap<>();
 
     private Shell theShell;
 
@@ -56,6 +57,7 @@ public class PhoneBook {
         r.addPhones(phNumbers);
         //recordsList.add(r);
         recordsList.put(r.getId(), r);
+        IndexByName.put(r.getName(), r);
     }
 
     @Command(name = "create", abbrev = "cn", description = "Add notes")
@@ -96,6 +98,11 @@ public class PhoneBook {
                 break;
             }
         }
+    }
+
+    @Command
+    public Collection<Record> findAffter(String str) {
+        return
     }
 
     @Command
