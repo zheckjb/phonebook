@@ -102,7 +102,7 @@ public class PhoneBook {
 
     @Command
     public Collection<Record> findAffter(String str) {
-        return
+        return <>
     }
 
     @Command
