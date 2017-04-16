@@ -7,6 +7,7 @@ import asg.cliche.ShellFactory;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.*;
 
 
@@ -69,12 +70,23 @@ public class PhoneBook {
         recordsList.put(r.getId(), r);
     }
 
-    @Command(name = "create", abbrev = "cnr", description = "Add notes")
+    @Command(name = "create", abbrev = "cnr", description = "Add notes with reminder")
     public void createNoteWithReminder(String nName, String nNote, String nDateTime) {
         Reminder r = new Reminder();
         r.setName(nName);
         r.setNote(nNote);
         r.setRemDate(nDateTime);
+        //recordsList.add(r);
+        recordsList.put(r.getId(), r);
+    }
+
+    @Command(name = "create", abbrev = "cnrd", description = "Add notes with reminder date")
+    public void createNoteWithReminder2(String nName, String nNote, String nDateTime) {
+        Reminder r = new Reminder();
+        r.setName(nName);
+        r.setNote(nNote);
+        r.setRemDateDt(nDateTime);
+        //r.setRemDate(nDateTime);
         //recordsList.add(r);
         recordsList.put(r.getId(), r);
     }
@@ -102,7 +114,7 @@ public class PhoneBook {
 
     @Command
     public Collection<Record> findAffter(String str) {
-        return <>
+        return null;
     }
 
     @Command
